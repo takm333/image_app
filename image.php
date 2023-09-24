@@ -85,7 +85,13 @@ if(!empty($_POST)){
         $image_name = 'image.png';
         $image = imagecreate(h($_POST['width']),h($_POST['height']));
         imagecolorallocate($image,h($_POST['red']),h($_POST['green']),h($_POST['blue']));
-        imagepng($image, $image_name);
+        $created_image = imagepng($image, $image_name);
+
+        header('Content-type: image/png');
+        header('Content-Disposition:attachment;filename = "'.$image_name.'"');
+        header('Content-Length: '. filesize($image_name));
+        echo file_get_contents($image_name);
+        exit();
     }
 }
 ?>
