@@ -103,11 +103,13 @@ if(!empty($_POST)){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <script type="text/javascript" src="./image.js"></script>
-    <title>Document</title>
+    <title>画像生成アプリ</title>
 </head>
 <body>
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-3 bg-secondary">
+            <span class="fs-4  text-white">画像生成アプリ</span>
+    </header>
     <div class="container">
-        <h1>画像生成アプリ</h1>
         <form action="" method="post">
             <div class="mb-3">
                 <label class="form-label fw-bold">横幅(px)</label>
