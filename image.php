@@ -26,6 +26,7 @@ function color_range_check($int){
 }
 
 if(!empty($_POST)){
+    //入力チェック
     if(!is_number($_POST['width'])){
         $error['width'] = 'number';
     }
@@ -35,7 +36,6 @@ if(!empty($_POST)){
     if(is_empty($_POST['width'])){
         $error['width'] = 'blank';
     }
-
 
     if(!is_number($_POST['height'])){
         $error['height'] = 'number';
@@ -47,7 +47,6 @@ if(!empty($_POST)){
         $error['height'] = 'blank';
     }
 
-
     if(!color_range_check($_POST['red'])){
         $error['red'] = 'color_range';
     }
@@ -58,7 +57,6 @@ if(!empty($_POST)){
         $error['red'] = 'blank';
     }
 
-
     if(!color_range_check($_POST['green'])){
         $error['green'] = 'color_range';
     }
@@ -68,7 +66,6 @@ if(!empty($_POST)){
     if(is_empty($_POST['green'])){
         $error['green'] = 'blank';
     }
-
 
     if(!color_range_check($_POST['blue'])){
         $error['blue'] = 'color_range';
@@ -82,6 +79,7 @@ if(!empty($_POST)){
 
 
     if(empty($error)){
+        //画像を出力
         $image_name = 'image.png';
         $image = imagecreate(h($_POST['width']),h($_POST['height']));
         imagecolorallocate($image,h($_POST['red']),h($_POST['green']),h($_POST['blue']));
@@ -111,6 +109,7 @@ if(!empty($_POST)){
     </header>
     <div class="container">
         <form action="" method="post">
+
             <div class="mb-3">
                 <label class="form-label fw-bold">横幅(px)</label>
                 <input type="number" class="form-control <?php if(!empty($error['width'])){echo h('is-invalid');}?> " name="width" value="<?php if(isset($_POST['width'])){echo h($_POST['width'],ENT_QUOTES);} ?>" required placeholder="1~9999" min="1" max="9999">
@@ -151,7 +150,6 @@ if(!empty($_POST)){
                 <?php endif ?>
             </div>
 
-
             <div class="mb-3">
                 <label class="form-label text-danger fw-bold">R(赤)  :  <span class="red"></span></label>
                 <input type="range" class="form-range <?php if(!empty($error['red'])){echo h('is-invalid');}?>" name="red" value="<?php if(isset($_POST['red'])){echo h($_POST['red'],ENT_QUOTES);} ?>" id="red" name="red" min="0" max="255">
@@ -171,9 +169,6 @@ if(!empty($_POST)){
                     </div>
                 <?php endif ?>
             </div>
-
-
-
 
             <div class="mb-3">
                 <label class="form-label text-success fw-bold">G(緑)  :  <span class="green">0</span></label>
