@@ -103,6 +103,41 @@ if(!empty($_POST)){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <title>Document</title>
+    <script>
+        window.onload = function() {
+
+
+            let red = document.getElementById("red");
+            let green = document.getElementById("green");
+            let blue = document.getElementById("blue");
+            let sample = document.getElementById("sample");
+
+            red.addEventListener('change',(e) => {
+                document.getElementsByClassName('red')[0].textContent = red.value;
+                sample_color_change();
+            });
+
+            green.addEventListener('change',(e) => {
+                document.getElementsByClassName('green')[0].textContent = green.value;
+                sample_color_change();
+            });
+
+            blue.addEventListener('change',(e) => {
+                document.getElementsByClassName('blue')[0].textContent = blue.value;
+                sample_color_change();
+            });
+
+            function sample_color_change(){
+                let sample_color = 'rgb(' + red.value + ',' + green.value + ',' + blue.value + ')' ;
+                sample.style.backgroundColor = sample_color;
+            }
+
+            document.getElementsByClassName('red')[0].textContent = red.value;
+            document.getElementsByClassName('green')[0].textContent = green.value;
+            document.getElementsByClassName('blue')[0].textContent = blue.value;
+            sample_color_change();
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -110,7 +145,7 @@ if(!empty($_POST)){
         <form action="" method="post">
             <div class="mb-3">
                 <label class="form-label fw-bold">横幅(px)</label>
-                <input type="number" class="form-control <?php if(!empty($error['width'])){echo h('is-invalid');}?>" name="width" value="<?php if(isset($_POST['width'])){echo h($_POST['width'],ENT_QUOTES);} ?>" required placeholder="1~9999" min="1" max="9999">
+                <input type="number" class="form-control <?php if(!empty($error['width'])){echo h('is-invalid');}?> " name="width" value="<?php if(isset($_POST['width'])){echo h($_POST['width'],ENT_QUOTES);} ?>" required placeholder="1~9999" min="1" max="9999">
                 <?php if(isset($error['width']) && $error['width'] === 'blank'):?>
                     <div class="invalid-feedback">
                         横幅を入力してください。
@@ -148,9 +183,10 @@ if(!empty($_POST)){
                 <?php endif ?>
             </div>
 
+
             <div class="mb-3">
-                <label class="form-label text-danger fw-bold">R(赤)</label>
-                <input type="number" class="form-control <?php if(!empty($error['red'])){echo h('is-invalid');}?>" name="red" value="<?php if(isset($_POST['red'])){echo h($_POST['red'],ENT_QUOTES);} ?>" required placeholder="0~255" min="0" max="255">
+                <label class="form-label text-danger fw-bold">R(赤)  :  <span class="red"></span></label>
+                <input type="range" class="form-range <?php if(!empty($error['red'])){echo h('is-invalid');}?>" name="red" value="<?php if(isset($_POST['red'])){echo h($_POST['red'],ENT_QUOTES);} ?>" id="red" name="red" min="0" max="255">
                 <?php if(isset($error['red']) && $error['red'] === 'blank'):?>
                     <div class="invalid-feedback">
                         R(赤)を入力してください。
@@ -168,9 +204,12 @@ if(!empty($_POST)){
                 <?php endif ?>
             </div>
 
+
+
+
             <div class="mb-3">
-                <label class="form-label text-success fw-bold">G(緑)</label>
-                <input type="number" class="form-control <?php if(!empty($error['green'])){echo h('is-invalid');}?>" name="green" value="<?php if(isset($_POST['green'])){echo h($_POST['green'],ENT_QUOTES);} ?>" required placeholder="0~255" min="0" max="255">
+                <label class="form-label text-success fw-bold">G(緑)  :  <span class="green">0</span></label>
+                <input type="range" class="form-range <?php if(!empty($error['green'])){echo h('is-invalid');}?>" name="green" value="<?php if(isset($_POST['green'])){echo h($_POST['green'],ENT_QUOTES);} ?>" id="green" name="green" min="0" max="255">
                 <?php if(isset($error['green']) && $error['green'] === 'blank'):?>
                     <div class="invalid-feedback">
                         G(緑)を入力してください。
@@ -189,8 +228,8 @@ if(!empty($_POST)){
             </div>
 
             <div class="mb-3">
-                <label class="form-label text-primary fw-bold">B(青)</label>
-                <input type="number" class="form-control <?php if(!empty($error['blue'])){echo h('is-invalid');}?>" name="blue" value="<?php if(isset($_POST['blue'])){echo h($_POST['blue'],ENT_QUOTES);} ?>" required placeholder="0~255" min="0" max="255">
+                <label class="form-label text-primary fw-bold">B(青)  :  <span class="blue">0</span></label>
+                <input type="range" class="form-range <?php if(!empty($error['blue'])){echo h('is-invalid');}?>" name="blue" value="<?php if(isset($_POST['blue'])){echo h($_POST['blue'],ENT_QUOTES);} ?>" id="blue" name="blue" min="0" max="255">
                 <?php if(isset($error['blue']) && $error['blue'] === 'blank'):?>
                     <div class="invalid-feedback">
                         B(青)を入力してください。
@@ -207,12 +246,16 @@ if(!empty($_POST)){
                     </div>
                 <?php endif ?>
             </div>
-            <!--
-            <input type="range" name="red" min="0" max="255">
-            <input type="range" name="green" min="0" max="255">
-            <input type="range" name="blue" min="0" max="255">
-            -->
-            <button type="submit" class="btn btn-primary">画像を生成する</button>
+
+            <label class="form-label fw-bold">色サンプル</label>
+            <div class="card mb-3" id="sample">
+                <div class="card-body mb-3"></div>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">画像を生成する</button>
+            </div>
+
         </form>
     </div>
 </body>
