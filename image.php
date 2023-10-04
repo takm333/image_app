@@ -1,8 +1,10 @@
 <?php
+$zip = new ZipArchive;
 require 'validation.php';
 require 'create_image.php';
 require 'download.php';
 $error = validation($_POST);
+
 
 function h($str){
     return htmlspecialchars($str, ENT_QUOTES);
@@ -10,8 +12,15 @@ function h($str){
 
 if(empty($error) && !empty($_POST)){
     //画像を出力
-    $image_name = create_image();
-    download_image($image_name);
+    $image_name = 'image1.png';
+    $folder_path = create_image();
+    $filepath = $folder_path . '/' . $image_name;
+    if($_POST['generate_quantity'] === '1'){
+        download_image($filepath);
+    } else {
+        download_zip($folder_path);
+    }
+    echo $filepath;
 }
 ?>
 
@@ -134,6 +143,26 @@ if(empty($error) && !empty($_POST)){
             <label class="form-label fw-bold">色サンプル</label>
             <div class="card mb-3" id="sample">
                 <div class="card-body mb-3"></div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">生成枚数</label>
+                <input type="number" class="form-control <?php if(!empty($error['width'])){echo h('is-invalid');}?> " name="generate_quantity" value="<?php if(isset($_POST['generate_quantity'])){echo h($_POST['generate_quantity'],ENT_QUOTES);}else{ echo 1;} ?>" required placeholder="1~100" min="1" max="100">
+                <?php if(isset($error['generate_quantity']) && $error['generate_quantity'] === 'blank'):?>
+                    <div class="invalid-feedback">
+                        生成枚数を入力してください。
+                    </div>
+                <?php endif ?>
+                <?php if(isset($error['generate_quantity']) && $error['generate_quantity'] === 'number'):?>
+                    <div class="invalid-feedback">
+                        生成枚数には半角数字を入力してください。
+                    </div>
+                <?php endif ?>
+                <?php if(isset($error['generate_quantity']) && $error['generate_quantity'] === 'generate'):?>
+                    <div class="invalid-feedback">
+                        生成枚数は1～100の間で指定してください。
+                    </div>
+                <?php endif ?>
             </div>
 
             <div class="mb-3">

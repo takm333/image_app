@@ -24,6 +24,12 @@ function validation($data){
         }
     }
 
+    function generate_range_check($int) {
+        if($int > 0 && $int <= 100){
+            return true;
+        }
+    }
+
     if(!empty($data)){
         //入力チェック
         if(!is_number($_POST['width'])){
@@ -74,6 +80,16 @@ function validation($data){
         }
         if(is_empty($_POST['blue'])){
             $error['blue'] = 'blank';
+        }
+
+        if(!is_number($_POST['generate_quantity'])){
+            $error['generate_quantity'] = 'number';
+        }
+        if(!generate_range_check($_POST['generate_quantity'])){
+            $error['generate_quantity'] = 'generate';
+        }
+        if(is_empty($_POST['generate_quantity'])){
+            $error['generate_quantity'] = 'blank';
         }
     }
 
